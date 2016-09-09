@@ -1,0 +1,25 @@
+# https://github.com/sameersbn/docker-gitlab
+gitlab:
+  image: sameersbn/gitlab
+  environment:
+    - GITLAB_PORT=10080
+    - GITLAB_SSH_PORT=10022
+    - GITLAB_HOST=192.168.253.129
+    - DB_ADAPTER=mysql2
+    - DB_HOST=192.168.253.129
+    - DB_NAME=gitlabhq_production
+    - DB_USER=gitlab
+    - DB_PASS=123456
+    - REDIS_HOST=192.168.253.129
+    - REDIS_PORT=6379
+    - SMTP_USER=lishijun@iwalnuts.com
+    - SMTP_PASS=Qwer123
+    - SMTP_HOST=smtp.exmail.qq.com
+    - GITLAB_SECRETS_DB_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
+    - GITLAB_SECRETS_SECRET_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
+    - GITLAB_SECRETS_OTP_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
+  volumes:
+    - /data/docker/gitlab/gitlab:/home/git/data
+  ports:
+    - "10080:80"
+    - "10022:22"

@@ -1,0 +1,15 @@
+phpfpm:
+  image: bitnami/php-fpm:5.6.18-0
+  volumes:
+    - /www:/www
+openresty:
+  image: openresty
+  links:
+    - phpfpm:phpfpm
+  volumes:
+    - /srv/docker/openresty/conf:/usr/local/openresty/nginx/conf
+    - /srv/docker/openresty/logs:/usr/local/openresty/nginx/logs
+  volumes_from:
+    - phpfpm
+  ports:
+    - "80:80"
