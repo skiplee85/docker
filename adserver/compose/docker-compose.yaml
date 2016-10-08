@@ -1,7 +1,7 @@
 adserver:
-  image: openresty
+  image: openresty-php
   volumes:
-    - /srv/docker/adserver/conf:/usr/local/openresty/nginx/conf
+    - /docker/adserver/conf:/usr/local/openresty/nginx/conf
     - /srv/docker/adserver/logs:/usr/local/openresty/nginx/logs
     - /www:/www
   ports:
