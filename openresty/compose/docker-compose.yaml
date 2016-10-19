@@ -5,4 +5,4 @@ openresty:
     - /srv/docker/openresty/logs:/usr/local/openresty/nginx/logs
     - /www:/www
   ports:
-    - "80:80"
+    - "10080:80"

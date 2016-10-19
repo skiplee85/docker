@@ -24,6 +24,9 @@ COPY protobuf.so  /usr/local/openresty/lualib/
 COPY json_decoder.lua /usr/local/openresty/lualib/
 COPY libljson.so      /usr/local/openresty/lualib/
 
+# timezone china/shanghai
+COPY localtime /etc/localtime
+
 WORKDIR /usr/local/openresty/
 COPY docker-entrypoint.sh /
 RUN chmod 755 /docker-entrypoint.sh
