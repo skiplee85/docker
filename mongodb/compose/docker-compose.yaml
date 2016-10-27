@@ -1,0 +1,6 @@
+mongodb:
+  image: mongo
+  volumes:
+    - /srv/docker/mongo/db:/data/db
+  ports:
+    - "27017:27017"
