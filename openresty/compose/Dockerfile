@@ -7,6 +7,9 @@ RUN apt-get update
 # redis
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends redis-server
 
+# magick
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libmagickwand-dev
+
 # php
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends php5-fpm 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends php5-mysqlnd php5-curl php5-redis php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-memcached php5-ming php5-ps php5-pspell php5-recode php5-sqlite php5-tidy php5-xmlrpc php5-xsl snmp php5-snmp
