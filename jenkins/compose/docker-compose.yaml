@@ -1,0 +1,9 @@
+# https://github.com/jenkinsci/docker
+# groupadd -g 1000 jenkins && useradd -u 1000 -g 1000 -m -s /bin/bash jenkins
+jenkins:
+  image: jenkins
+ # user: root
+  volumes:
+    - /srv/docker/jenkins:/var/jenkins_home
+  ports:
+    - "8080:8080"
