@@ -1,8 +1,17 @@
+php-fpm:
+  image: bitnami/php-fpm
+  volumes:
+    - /www:/www
+    - /docker/openresty/conf/php-fpm.conf:/bitnami/php/conf/common.conf
+
 openresty:
   image: openresty-php
   volumes:
-    - /docker/openresty/conf:/usr/local/openresty/nginx/conf
+    - /docker/openresty/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+    - /docker/openresty/conf/vhost:/usr/local/openresty/nginx/conf/vhost
     - /srv/docker/openresty/logs:/usr/local/openresty/nginx/logs
     - /www:/www
+  links:
+    - php-fpm:php-fpm
   ports:
     - "80:80"

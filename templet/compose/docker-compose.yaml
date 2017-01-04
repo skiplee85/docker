@@ -1,7 +1,8 @@
 templet:
   image: openresty
   volumes:
-    - /docker/templet/conf:/usr/local/openresty/nginx/conf
+    - /docker/templet/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+    - /docker/templet/conf/vhost:/usr/local/openresty/nginx/conf/vhost
     - /srv/docker/templet/logs:/usr/local/openresty/nginx/logs
     - /www:/www
   ports:
