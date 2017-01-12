@@ -1,0 +1,9 @@
+templet:
+  image: openresty
+  volumes:
+    - ./conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+    - ./conf/vhost:/usr/local/openresty/nginx/conf/vhost
+    - /srv/docker/templet/logs:/usr/local/openresty/nginx/logs
+    - /www:/www
+  ports:
+    - "10080:10080"
