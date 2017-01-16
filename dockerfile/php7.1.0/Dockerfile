@@ -10,3 +10,8 @@ RUN apt-get update && apt-get install -y \
         libtidy-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) iconv mcrypt gd iconv tidy soap
+RUN apt-get install -y ssh
+COPY entrypoint.sh /
+RUN chmod 755 /entrypoint.sh
+ 
+ENTRYPOINT ["/entrypoint.sh"]

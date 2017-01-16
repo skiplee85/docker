@@ -5,6 +5,7 @@ services:
     image: php7.1.0
     volumes:
       - /www:/www
+      - /root/.ssh:/root/.ssh
 
   openresty:
     image: openresty
@@ -13,6 +14,7 @@ services:
       - ./conf/vhost:/usr/local/openresty/nginx/conf/vhost
       - /srv/docker/openresty/logs:/usr/local/openresty/nginx/logs
       - /www:/www
+      - /root/.ssh:/root/.ssh
     links:
       - php-fpm:php-fpm
     ports:

@@ -19,7 +19,8 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 redis-server \
 libmagickwand-dev \
-memcached
+memcached \
+ssh
 
 WORKDIR /usr/local/openresty/
 COPY docker-entrypoint.sh /
