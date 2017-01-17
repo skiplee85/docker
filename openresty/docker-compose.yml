@@ -2,7 +2,8 @@ version: '2'
 
 services:
   php-fpm:
-    image: php7.1.0
+    #image: php7.1.0
+    image: php5.6.29
     volumes:
       - /www:/www
       - /root/.ssh:/root/.ssh
