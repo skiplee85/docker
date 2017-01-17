@@ -1,9 +1,17 @@
 # https://github.com/jenkinsci/docker
 # groupadd -g 1000 jenkins && useradd -u 1000 -g 1000 -m -s /bin/bash jenkins
-jenkins:
-  image: jenkins
- # user: root
+php5:
+  image: php5.6.29
   volumes:
     - /srv/docker/jenkins:/var/jenkins_home
+    - /root/.ssh:/root/.ssh
+
+jenkins:
+  image: jenkins
+  user: root
+  volumes_from:
+    - php5
+  links: 
+    - php5
   ports:
     - "8080:8080"

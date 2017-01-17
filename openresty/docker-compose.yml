@@ -14,9 +14,9 @@ services:
       - ./conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
       - ./conf/vhost:/usr/local/openresty/nginx/conf/vhost
       - /srv/docker/openresty/logs:/usr/local/openresty/nginx/logs
-      - /www:/www
-      - /root/.ssh:/root/.ssh
+    volumes_from:
+      - php-fpm
     links:
-      - php-fpm:php-fpm
+      - php-fpm
     ports:
       - "80:80"
