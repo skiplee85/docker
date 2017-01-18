@@ -18,7 +18,7 @@ RUN chmod +x /entrypoint.sh
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
-ENV PATH $PATH:/root/.composer/vendor/bin
+RUN echo 'PATH=$PATH:/root/.composer/vendor/bin' >> /root/.bashrc
 RUN mv composer.phar /usr/bin/composer
 RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
