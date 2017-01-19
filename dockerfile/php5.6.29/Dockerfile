@@ -19,8 +19,7 @@ RUN apt-get update && apt-get install -y \
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 # install composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && php composer-setup.php
 RUN php -r "unlink('composer-setup.php');"
 RUN echo 'PATH=$PATH:/root/.composer/vendor/bin' >> /root/.bashrc
 RUN mv composer.phar /usr/bin/composer
