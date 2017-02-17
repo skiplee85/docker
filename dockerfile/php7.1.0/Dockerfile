@@ -21,4 +21,7 @@ RUN echo 'PATH=$PATH:/root/.composer/vendor/bin' >> /root/.bashrc
 RUN mv composer.phar /usr/bin/composer
 RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 
+# add ZipArchive
+RUN pecl install zip && docker-php-ext-enable zip
+
 ENTRYPOINT ["/entrypoint.sh"]
