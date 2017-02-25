@@ -7,6 +7,8 @@ services:
     volumes:
       - /www:/www
       - /root/.ssh:/root/.ssh
+      - ./conf/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./conf/php.ini-development:/usr/local/etc/php/php.ini
 
   openresty:
     image: openresty
