@@ -22,7 +22,7 @@ COPY mysql-connector-java-5.1.39-bin.jar /opt/atlassian/confluence/confluence/WE
 
 # install jira
 RUN /opt/install.sh $INSTALL_PATH$INSTALL_JIRA
-COPY jira/* /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
+COPY jira/atlassian-extras-3.1.2.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
 COPY mysql-connector-java-5.1.39-bin.jar /opt/atlassian/jira/atlassian-jira/WEB-INF/lib/
 
 # port
