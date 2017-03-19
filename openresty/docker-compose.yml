@@ -2,13 +2,14 @@ version: '2'
 
 services:
   php-fpm:
-    #image: php7.1.0
-    image: php5.6.29
+    #image: php7.0
+    image: php5.6
     volumes:
       - /www:/www
       - /root/.ssh:/root/.ssh
       - ./conf/php-fpm.conf:/usr/local/etc/php-fpm.conf
-      - ./conf/php.ini-development:/usr/local/etc/php/php.ini
+      # - ./conf/php.ini-development:/usr/local/etc/php/php.ini
+      - ./conf/php.ini-production:/usr/local/etc/php/php.ini
 
   openresty:
     image: openresty
