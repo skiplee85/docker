@@ -32,7 +32,12 @@ RUN apt-get install -y zip && pecl install zip-1.13.5 && docker-php-ext-enable z
 # redis
 RUN pecl install redis-3.1.1 && docker-php-ext-enable redis
 # mongodb
-RUN pecl install mongodb-1.2.8 && docker-php-ext-enable mongodb
+RUN curl -L http://pecl.php.net/get/mongodb-1.2.8.tgz > mongodb-1.2.8.tgz \
+    && tar xvf mongodb-1.2.8.tgz \
+    && cd mongodb-1.2.8 \
+    && phpize && ./configure && make && make install \
+    && docker-php-ext-enable mongodb \
+    && rm -rf ../*
 # rabbitmq
 RUN apt-get install -y librabbitmq-dev && pecl install amqp-1.9.0 && docker-php-ext-enable amqp
 # yaf 
