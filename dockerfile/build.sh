@@ -9,6 +9,9 @@ function buildDockerImage()
   do
     if [ -d $file ]; then
       docker build -t $file ./$file/
+      if [ $? -ne 0 ]; then
+        exit
+      fi
       cd $file
       buildDockerImage
       cd ..
