@@ -1,0 +1,14 @@
+# https://hub.docker.com/_/rabbitmq/
+rabbitmq:
+  restart: always
+  image: rabbitmq:3.6.9-management-alpine
+  environment:
+    # - HOSTNAME=rabbitmq
+    - RABBITMQ_NODENAME=rabbitmq
+    - RABBITMQ_DEFAULT_USER=guest
+    - RABBITMQ_DEFAULT_PASS=guest
+    # - RABBITMQ_DEFAULT_VHOST=my_vhost
+    # - RABBITMQ_ERLANG_COOKIE='UoNOcDhfxW9uoZ92wh6BjA=='
+  ports:
+    - "15672:15672"
+    - "5672:5672"
