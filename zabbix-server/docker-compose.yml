@@ -1,0 +1,30 @@
+# https://hub.docker.com/r/zabbix/zabbix-server-mysql/
+# https://hub.docker.com/r/zabbix/zabbix-web-nginx-mysql/
+version: '2'
+services:
+  zabbix-server:
+    image: zabbix/zabbix-server-mysql:alpine-3.2.4
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - DB_SERVER_HOST=172.17.0.1
+      - DB_SERVER_PORT=3306
+      - MYSQL_DATABASE=zabbix
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+  zabbix-web-nginx-mysql:
+    image: zabbix/zabbix-web-nginx-mysql:alpine-3.2.4
+    restart: always
+    ports:
+      - "8888:80"
+      - "10051:10051"
+    links:
+      - zabbix-server
+    environment:
+      - DB_SERVER_HOST=172.17.0.1
+      - DB_SERVER_PORT=3306
+      - MYSQL_DATABASE=zabbix
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+      - TZ='Asia/Shanghai'
