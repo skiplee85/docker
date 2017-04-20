@@ -3,8 +3,8 @@ FROM php:5.6-fpm
 # change sources
 RUN sed -i 's/http:\/\/deb.debian.org\/debian/http:\/\/mirrors.aliyun.com\/debian/g' /etc/apt/sources.list
 # entrypoint
-COPY entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+COPY entrypoint.sh pecl-package-manual-install.sh /
+RUN chmod +x /entrypoint.sh /pecl-package-manual-install.sh
 # install composer
 COPY composer /usr/bin/
 RUN chmod +x /usr/bin/composer
@@ -32,22 +32,12 @@ RUN apt-get install -y zip && pecl install zip-1.13.5 && docker-php-ext-enable z
 # redis
 RUN pecl install redis-3.1.1 && docker-php-ext-enable redis
 # mongodb
-RUN curl -L http://pecl.php.net/get/mongodb-1.2.8.tgz > mongodb-1.2.8.tgz \
-    && tar xvf mongodb-1.2.8.tgz \
-    && cd mongodb-1.2.8 \
-    && phpize && ./configure && make && make install \
-    && docker-php-ext-enable mongodb \
-    && rm -rf ../*
+RUN /pecl-package-manual-install.sh mongodb-1.2.8 && docker-php-ext-enable mongodb
 # rabbitmq
 RUN apt-get install -y librabbitmq-dev && pecl install amqp-1.9.0 && docker-php-ext-enable amqp
 # yaf 
-RUN curl -L http://pecl.php.net/get/yaf-2.3.5.tgz > yaf-2.3.5.tgz \
-    && tar xvf yaf-2.3.5.tgz \
-    && cd yaf-2.3.5 \
-    && phpize && ./configure && make && make install \
-    && docker-php-ext-enable yaf \
-    && rm -rf ../*
+RUN /pecl-package-manual-install.sh yaf-2.3.5 && docker-php-ext-enable yaf
 # swoole
-RUN pecl install swoole-1.9.8 && docker-php-ext-enable swoole
+RUN /pecl-package-manual-install.sh swoole-2.0.7 && docker-php-ext-enable swoole
 
 ENTRYPOINT ["/entrypoint.sh"]

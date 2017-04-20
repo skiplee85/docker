@@ -1,5 +1,5 @@
 mongodb:
-  image: mongo
+  image: mongo:3.5
   volumes:
     - /srv/docker/mongo/db:/data/db
   ports:

@@ -1,4 +1,4 @@
-FROM php7.0
+FROM myphp:5.6
 RUN composer global require "squizlabs/php_codesniffer=*" \
     && composer global require phpmd/phpmd \
     && composer global require "sebastian/phpcpd=*" \
