@@ -2,14 +2,6 @@
 FROM php:7.0-fpm
 # change sources
 RUN sed -i 's/http:\/\/deb.debian.org\/debian/http:\/\/mirrors.aliyun.com\/debian/g' /etc/apt/sources.list
-# entrypoint
-COPY entrypoint.sh pecl-package-manual-install.sh /
-RUN chmod +x /entrypoint.sh /pecl-package-manual-install.sh
-# install composer
-COPY composer /usr/bin/
-RUN chmod +x /usr/bin/composer
-RUN echo 'PATH=$PATH:/root/.composer/vendor/bin' >> /root/.bashrc
-RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
 # common ext
 RUN apt-get update && apt-get install -y \
         libssl-dev \
@@ -23,6 +15,9 @@ RUN apt-get update && apt-get install -y \
         ssh \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) iconv mcrypt gd iconv tidy soap pdo_mysql mysqli
+# pecl install shell
+COPY pecl-package-manual-install.sh /
+RUN chmod +x /pecl-package-manual-install.sh
 # update pecl
 RUN pecl channel-update pecl.php.net
 # memcached
@@ -38,6 +33,15 @@ RUN apt-get install -y librabbitmq-dev && pecl install amqp-1.9.0 && docker-php-
 # yaf 
 RUN pecl install yaf-3.0.4 && docker-php-ext-enable yaf
 # swoole
-RUN /pecl-package-manual-install.sh swoole-2.0.7 && docker-php-ext-enable swoole
+RUN pecl install swoole-2.0.7 && docker-php-ext-enable swoole
+
+# install composer
+COPY composer /usr/bin/
+RUN chmod +x /usr/bin/composer
+RUN echo 'PATH=$PATH:/root/.composer/vendor/bin' >> /root/.bashrc
+RUN composer config -g repo.packagist composer https://packagist.phpcomposer.com
+# entrypoint
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
