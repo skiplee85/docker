@@ -1,29 +1,20 @@
+# https://hub.docker.com/r/openresty/openresty/
 FROM openresty/openresty:trusty
 # link nginx
 RUN ln -s /usr/local/openresty/nginx/sbin/nginx /usr/bin/nginx
-
 # lib protobuf
-COPY protobuf.lua /usr/local/openresty/lualib/
-COPY protobuf.so  /usr/local/openresty/lualib/
+COPY protobuf.lua protobuf.so /usr/local/openresty/lualib/
+# timezone Asia/Shanghai
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+# ssh
+RUN sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.aliyun.com\/ubuntu\//g' /etc/apt/sources.list \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ssh
 
-# lib json_decode
-COPY json_decoder.lua /usr/local/openresty/lualib/
-COPY libljson.so      /usr/local/openresty/lualib/
-
-# timezone china/shanghai
-COPY localtime /etc/localtime
-
-RUN sed -i 's/http:\/\/archive.ubuntu.com\/ubuntu\//http:\/\/mirrors.aliyun.com\/ubuntu\//g' /etc/apt/sources.list
-RUN apt-get update
-
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-redis-server \
-libmagickwand-dev \
-memcached \
-ssh
-
-WORKDIR /usr/local/openresty/
+# entrypoint
 COPY docker-entrypoint.sh /
-RUN chmod 755 /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
+WORKDIR /usr/local/openresty
+CMD ["/usr/local/openresty/bin/openresty", "-g", "daemon off;"];

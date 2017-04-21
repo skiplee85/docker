@@ -1,5 +1,7 @@
 #https://hub.docker.com/_/php/
 FROM php:7.0-fpm
+# timezone Asia/Shanghai
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # change sources
 RUN sed -i 's/http:\/\/deb.debian.org\/debian/http:\/\/mirrors.aliyun.com\/debian/g' /etc/apt/sources.list
 # common ext
@@ -45,3 +47,5 @@ COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
+WORKDIR /www
+CMD ["php-fpm"]

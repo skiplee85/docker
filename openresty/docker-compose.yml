@@ -8,8 +8,8 @@ services:
       - /www:/www
       - /root/.ssh:/root/.ssh
       - ./conf/php-fpm.conf:/usr/local/etc/php-fpm.conf
-      - ./conf/php.ini-development:/usr/local/etc/php/php.ini
-      # - ./conf/php.ini-production:/usr/local/etc/php/php.ini
+      # - ./conf/php.ini-development:/usr/local/etc/php/php.ini
+      - ./conf/php.ini-production:/usr/local/etc/php/php.ini
     expose:
       - 9000
   openresty:
@@ -24,5 +24,3 @@ services:
       - php-fpm
     ports:
       - 80-89:80-89
-      - 6379:6379
-      - 11211:11211
