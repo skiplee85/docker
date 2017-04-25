@@ -14,3 +14,8 @@ services:
       - ZBX_HOSTNAME=zabbix-agent
       - ZBX_SERVER_HOST=192.168.61.128
       - ZBX_ACTIVESERVERS=zabbix-server:10051
+
+networks:
+  default:
+    external:
+      name: network_default

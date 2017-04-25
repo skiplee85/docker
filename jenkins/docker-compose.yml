@@ -1,18 +1,26 @@
 # https://github.com/jenkinsci/docker
 # groupadd -g 1000 jenkins && useradd -u 1000 -g 1000 -m -s /bin/bash jenkins
-php-test:
-  image: php5test
-  # image: php7test
-  volumes:
-    - /srv/docker/jenkins:/var/jenkins_home
-    - /root/.ssh:/root/.ssh
+version: '2'
 
-jenkins:
-  image: jenkins
-  user: root
-  volumes_from:
-    - php-test
-  links: 
-    - php-test
-  ports:
-    - "8080:8080"
+services:
+  php-test:
+    # image: myphp:5.6test
+    image: myphp:7test
+    volumes:
+      - /srv/docker/jenkins:/var/jenkins_home
+      - /root/.ssh:/root/.ssh
+
+  jenkins:
+    image: jenkins
+    user: root
+    volumes_from:
+      - php-test
+    links: 
+      - php-test
+    ports:
+      - "8080:8080"
+
+networks:
+  default:
+    external:
+      name: network_default

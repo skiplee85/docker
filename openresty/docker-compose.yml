@@ -24,3 +24,8 @@ services:
       - php-fpm
     ports:
       - 80-89:80-89
+
+networks:
+  default:
+    external:
+      name: network_default

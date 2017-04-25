@@ -1,34 +1,42 @@
 # https://github.com/sameersbn/docker-gitlab
-redis:
-    restart: always
-    image: sameersbn/redis:latest
-    command:
-      - --loglevel warning
-    volumes:
-      - /srv/docker/gitlab/redis:/var/lib/redis:Z
+version: '2'
 
-gitlab:
-  restart: always
-  image: sameersbn/gitlab:8.14.5
-  links:
-    - redis:redisio
-  environment:
-    - GITLAB_PORT=10080
-    - GITLAB_SSH_PORT=10022
-    - GITLAB_HOST=123.56.23.94
-    - DB_ADAPTER=mysql2
-    - DB_HOST=192.168.0.1
-    - DB_NAME=gitlabhq_production
-    - DB_USER=gitlab
-    - DB_PASS=123456
-    - SMTP_USER=lishijun@iwalnuts.com
-    - SMTP_PASS=Qwer123
-    - SMTP_HOST=smtp.exmail.qq.com
-    - GITLAB_SECRETS_DB_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
-    - GITLAB_SECRETS_SECRET_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
-    - GITLAB_SECRETS_OTP_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
-  volumes:
-    - /srv/docker/gitlab/gitlab:/home/git/data
-  ports:
-    - "10080:80"
-    - "10022:22"
+services:
+  redis:
+      restart: always
+      image: sameersbn/redis:latest
+      command:
+        - --loglevel warning
+      volumes:
+        - /srv/docker/gitlab/redis:/var/lib/redis:Z
+
+  gitlab:
+    restart: always
+    image: sameersbn/gitlab:8.14.5
+    links:
+      - redis:redisio
+    environment:
+      - GITLAB_PORT=10080
+      - GITLAB_SSH_PORT=10022
+      - GITLAB_HOST=localhost
+      - DB_ADAPTER=mysql2
+      - DB_HOST=172.17.0.1
+      - DB_NAME=gitlabhq_production
+      - DB_USER=root
+      - DB_PASS=123456
+      - SMTP_USER=lishijun@sensefun.com
+      - SMTP_PASS=Qwer1234
+      - SMTP_HOST=smtp.partner.outlook.cn
+      - GITLAB_SECRETS_DB_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
+      - GITLAB_SECRETS_SECRET_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
+      - GITLAB_SECRETS_OTP_KEY_BASE=LhfRbJWqJN3Ts9MqJtqs7CP9bMpvnvFhfnfHwxwpm4rpbV37qr9h3hH3XFqKLXVF
+    volumes:
+      - /srv/docker/gitlab/gitlab:/home/git/data
+    ports:
+      - "10080:80"
+      - "10022:22"
+
+networks:
+  default:
+    external:
+      name: network_default

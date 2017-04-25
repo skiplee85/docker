@@ -34,4 +34,10 @@ do
   fi
 done
 
+#create default network
+net_name='network_default'
+is_exist=`docker network ls|grep $net_name|wc -l`
+if [ $is_exist -eq 0 ]; then
+  docker network create -d bridge $net_name
+fi
 exit 0
