@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  openresty:
+    image: openresty/openresty
+    volumes:
+      - ./conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./conf/vhost:/usr/local/openresty/nginx/conf/vhost
+      - ./logs:/usr/local/openresty/nginx/logs
+    ports:
+      - 85:80
