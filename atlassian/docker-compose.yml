@@ -5,7 +5,7 @@ services:
     volumes:
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./data/db_data:/var/lib/mysql
+      - /data/atlassian/db_data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 123456
@@ -16,15 +16,15 @@ services:
   confluence:
     build: ./confluence
     volumes:
-      - ./data/confluence:/var/atlassian/application-data/confluence
+      - /data/atlassian/confluence:/var/atlassian/application-data/confluence
     ports:
       - "8090:8090"
     restart: always
   
   jira:
-    build: ./jira
+    image: skiplee/jira:7.7.1
     volumes:
-      - ./data/jira:/var/atlassian/application-data/jira
+      - /data/atlassian/jira:/var/atlassian/application-data/jira
     ports:
       - "8080:8080"
     restart: always
