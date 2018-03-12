@@ -8,15 +8,25 @@ services:
     command:
       - --loglevel warning
     volumes:
-      - /srv/docker/gitlab/redis:/var/lib/redis:Z
+      - /data/gitlab/redis:/var/lib/redis
+
+  mysql:
+    restart: always
+    image: sameersbn/mysql:latest
+    volumes:
+      - /data/gitlab/mysql:/var/lib/mysql
+    environment:
+      - DB_NAME=gitlabhq_production
+      - DB_USER=root
+      - DB_PASS=123456
 
   gitlab:
     restart: always
-    image: sameersbn/gitlab:9.1.0-1
+    image: sameersbn/gitlab:10.5.1
     depends_on:
       - redis
     volumes:
-      - /srv/docker/gitlab/gitlab:/home/git/data
+      - /data/gitlab/gitlab:/home/git/data
     ports:
       - "10080:80"
       - "10022:22"
@@ -30,7 +40,7 @@ services:
       - GITLAB_HOST=localhost
 
       - DB_ADAPTER=mysql2
-      - DB_HOST=172.17.0.1
+      - DB_HOST=mysql
       - DB_NAME=gitlabhq_production
       - DB_USER=root
       - DB_PASS=123456
@@ -133,8 +143,3 @@ services:
       # - OAUTH_AZURE_API_KEY=
       # - OAUTH_AZURE_API_SECRET=
       # - OAUTH_AZURE_TENANT_ID=
-
-networks:
-  default:
-    external:
-      name: network_default
