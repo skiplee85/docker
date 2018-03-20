@@ -2,7 +2,7 @@ version: '2'
 
 services:
   php-fpm:
-    image: myphp:7.0
+    image: myphp
     # image: myphp5.6
     volumes:
       - /www:/www
@@ -10,8 +10,6 @@ services:
       - ./conf/php-fpm.conf:/usr/local/etc/php-fpm.conf
       # - ./conf/php.ini-development:/usr/local/etc/php/php.ini
       - ./conf/php.ini-production:/usr/local/etc/php/php.ini
-    expose:
-      - 9000
   openresty:
     image: openresty
     volumes:

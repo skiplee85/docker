@@ -22,9 +22,10 @@ services:
 
   gitlab:
     restart: always
-    image: sameersbn/gitlab:10.5.1
+    image: sameersbn/gitlab:10.5.5
     depends_on:
       - redis
+      - mysql
     volumes:
       - /data/gitlab/gitlab:/home/git/data
     ports:
