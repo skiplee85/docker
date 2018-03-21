@@ -4,17 +4,14 @@ services:
     image: mysql:5.7
     volumes:
       - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - /data/atlassian/db_data:/var/lib/mysql
+      - ./mysql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - /data/atlassian/mysql:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: confluence
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 123456
 
   confluence:
-    build: ./confluence
+    image: skiplee/confluence:6.6
     volumes:
       - /data/atlassian/confluence:/var/atlassian/application-data/confluence
     ports:
