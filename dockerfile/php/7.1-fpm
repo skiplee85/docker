@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y \
     libtidy-dev \
     zlib1g-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt gd iconv tidy soap pdo_mysql mysqli
+    && docker-php-ext-install -j$(nproc) iconv mcrypt gd iconv tidy soap pdo_mysql mysqli mbstring bcmath
 # pecl install shell
 COPY pecl-package-manual-install.sh /
 RUN chmod +x /pecl-package-manual-install.sh
@@ -24,19 +24,17 @@ RUN pecl channel-update pecl.php.net
 # memcached
 RUN apt-get install -y libmemcached-dev && /pecl-package-manual-install.sh memcached-3.0.4 && docker-php-ext-enable memcached
 # zip
-RUN apt-get install -y libzip-dev && /pecl-package-manual-install.sh zip-1.15.2 && docker-php-ext-enable zip
+RUN apt-get install -y libzip-dev && /pecl-package-manual-install.sh zip-1.15.3 && docker-php-ext-enable zip
 # redis
-RUN /pecl-package-manual-install.sh redis-3.1.6 && docker-php-ext-enable redis
+RUN /pecl-package-manual-install.sh redis-4.1.1 && docker-php-ext-enable redis
 # mongodb
-RUN /pecl-package-manual-install.sh mongodb-1.4.2 && docker-php-ext-enable mongodb
+RUN /pecl-package-manual-install.sh mongodb-1.5.2 && docker-php-ext-enable mongodb
 # rabbitmq
 RUN apt-get install -y librabbitmq-dev && /pecl-package-manual-install.sh amqp-1.9.3 && docker-php-ext-enable amqp
 # yaf 
-RUN /pecl-package-manual-install.sh yaf-3.0.6 && docker-php-ext-enable yaf
+RUN /pecl-package-manual-install.sh yaf-3.0.7 && docker-php-ext-enable yaf
 # swoole
-RUN /pecl-package-manual-install.sh swoole-2.1.1 && docker-php-ext-enable swoole
-# inotify
-RUN /pecl-package-manual-install.sh inotify-2.0.0 && docker-php-ext-enable inotify
+RUN /pecl-package-manual-install.sh swoole-4.1.1 && docker-php-ext-enable swoole
 
 # install composer
 COPY composer /usr/bin/
