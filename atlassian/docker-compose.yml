@@ -1,7 +1,7 @@
 version: '2'
 services:
   mysql:
-    image: mysql:5.7.25
+    image: mysql:5.6
     volumes:
       - ./conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./conf.d/schema.sql:/docker-entrypoint-initdb.d/schema.sql
@@ -12,6 +12,8 @@ services:
 
   confluence:
     image: skiplee/confluence:6.6
+    depends_on:
+      - mysql
     volumes:
       - /data/atlassian/confluence:/var/atlassian/application-data/confluence
     ports:
@@ -20,6 +22,8 @@ services:
   
   jira:
     image: skiplee/jira:7.7.1
+    depends_on:
+      - mysql
     volumes:
       - /data/atlassian/jira:/var/atlassian/application-data/jira
     ports:
